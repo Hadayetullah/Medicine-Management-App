@@ -22,6 +22,7 @@ class Medicine(models.Model):
     medicine_category = models.ForeignKey(Category, on_delete=models.CASCADE)
     medicine_name = models.CharField(max_length=255)
     medicine_price = models.FloatField()
+    medicine_power = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 

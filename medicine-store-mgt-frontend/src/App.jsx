@@ -23,7 +23,7 @@ function App() {
       <BrowserRouter>
         <Navbar />
 
-        <div className="container mx-auto py-4">
+        <div className="container mx-auto px-4 py-1 sm:px-0 sm:py-3">
           <AppRoutes />
         </div>
       </BrowserRouter>

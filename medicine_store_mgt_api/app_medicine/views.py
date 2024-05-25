@@ -4,6 +4,7 @@ from rest_framework import status
 from .models import Company, Category, Medicine
 from .serializers import CompanySerializer, CategorySerializer, MedicineSerializer
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 
 
 class CompanyListCreateView(APIView):
@@ -94,7 +95,29 @@ class CategoryDetailView(APIView):
 
 class MedicineListCreateView(APIView):
     def get(self, request):
-        medicines = Medicine.objects.all()
+        company_name = request.GET.get('company_name')
+        medicine_category = request.GET.get('medicine_category')
+        initial_price = request.GET.get('initial_price')
+        end_price = request.GET.get('end_price')
+        # single_price = request.GET.get('price')
+
+        filters = Q()
+
+        if company_name:
+            filters &= Q(company_name__name__icontains=company_name)
+        if medicine_category:
+            filters &= Q(medicine_category__name__icontains=medicine_category)
+        if initial_price and end_price:
+            filters &= Q(medicine_price__gte=float(initial_price)) & Q(
+                medicine_price__lte=float(end_price))
+        elif initial_price:
+            filters &= Q(medicine_price=float(initial_price))
+        elif end_price:
+            filters &= Q(medicine_price=float(end_price))
+        # if single_price:
+        #     filters &= Q(medicine_price=float(single_price))
+
+        medicines = Medicine.objects.filter(filters)
         serializer = MedicineSerializer(medicines, many=True)
         return Response(serializer.data)
 

@@ -1,33 +1,32 @@
 // src/App.js
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
-import { Provider } from "react-redux";
-// import store from "./redux/store";
 import AppRoutes from "./routes/AppRoutes";
 import Navbar from "./components/common/Navbar";
+
+import { useDispatch } from "react-redux";
+
+import { allMedicines } from "./components/dashboard/features/allMedicineSlice";
 
 import "./assets/index.css";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(allMedicines());
+  }, [dispatch]);
+
   return (
-    <>
-      {/* <Provider store={store}>
-        <BrowserRouter>
-          <Navbar />
+    <BrowserRouter>
+      <Navbar />
 
-          <div className="container mx-auto py-4">
-            <AppRoutes />
-          </div>
-        </BrowserRouter>
-      </Provider> */}
-      <BrowserRouter>
-        <Navbar />
-
-        <div className="container mx-auto px-4 py-1 sm:px-0 sm:py-3">
+      <div className="bg-white pt-4 px-2 sm:px-4">
+        <div className="container mx-auto pt-0 pb-3 md:pb-0 sm:pt-3 mt-[60px]">
           <AppRoutes />
         </div>
-      </BrowserRouter>
-    </>
+      </div>
+    </BrowserRouter>
   );
 }
 

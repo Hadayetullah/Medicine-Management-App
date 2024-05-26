@@ -1,6 +1,6 @@
-import React from "react";
 import Filter from "../components/dashboard/forms/Filter";
 import AddData from "../components/dashboard/forms/AddData";
+import MedicineList from "../components/dashboard/MedicineList";
 
 const Dashboard = () => {
   return (
@@ -18,6 +18,8 @@ const Dashboard = () => {
       <hr />
       <hr />
       <hr />
+
+      <MedicineList />
     </div>
   );
 };

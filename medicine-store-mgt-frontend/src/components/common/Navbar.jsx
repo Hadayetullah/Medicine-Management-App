@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   return (
-    <nav className="bg-blue-500 p-4">
-      <div className="container mx-auto flex space-x-0 items-center flex-row justify-between sm:space-x-4">
+    <nav className="bg-blue-500 py-4 px-2 sm:px-4 fixed top-0 left-0 w-full">
+      <div className="container mx-auto flex items-center flex-row justify-between">
         <div className="flex items-center justify-evenly w-full flex-row-reverse sm:flex-row sm:justify-between">
           <div className="w-full flex items-left sm:items-center pl-[6%] sm:pl-0">
             <Link to={"/"} className="text-white">
@@ -68,7 +68,7 @@ const Navbar = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="size-8 text-white"
+            className="size-8 text-white ml-7"
           >
             <path
               strokeLinecap="round"

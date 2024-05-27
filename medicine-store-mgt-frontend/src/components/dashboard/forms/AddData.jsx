@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addNewData, setError } from "../features/allMedicineSlice";
 
 const AddData = () => {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     companyName: "",
     categoryName: "",
@@ -33,8 +36,8 @@ const AddData = () => {
         "http://127.0.0.1:8000/api/medicine/medicines/",
         data
       );
-      console.log("Data added successfully:", response.data);
-      // Clear the form
+
+      dispatch(addNewData(response.data));
       setFormData({
         companyName: "",
         categoryName: "",
@@ -43,13 +46,7 @@ const AddData = () => {
         medicinePower: "",
       });
     } catch (error) {
-      if (error.response && error.response.status === 409) {
-        console.error(
-          "Conflict error: Medicine with this company, category, name, and power already exists."
-        );
-      } else {
-        console.error("Error adding data:", error);
-      }
+      dispatch(setError(error.response.data.non_field_errors[0]));
     }
   };
 

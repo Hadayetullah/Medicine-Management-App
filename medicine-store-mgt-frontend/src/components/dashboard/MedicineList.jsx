@@ -1,14 +1,23 @@
 import { useDispatch, useSelector } from "react-redux";
-import { deleteMedicine } from "./features/allMedicineSlice";
+import {
+  deleteMedicine,
+  setEditModal,
+  setSelectedMedicine,
+} from "./features/allMedicineSlice";
 
 const MedicineList = () => {
   const dispatch = useDispatch();
-  const { loading, getAllMedicines, error } = useSelector(
+  const { loading, getAllMedicines, error, editModal } = useSelector(
     (state) => state.allMedicines
   );
 
   const handleDelete = (id) => {
     dispatch(deleteMedicine(id));
+  };
+
+  const handleEditForm = (medicine) => {
+    dispatch(setSelectedMedicine(medicine));
+    dispatch(setEditModal(!editModal));
   };
 
   if (loading) {
@@ -150,7 +159,10 @@ const MedicineList = () => {
                         </div>
 
                         <div className="w-[13%] h-full flex my-1 flex-col pl-1 items-center gap-[3px]">
-                          <button className="w-full text-gray-900 bg-yellow-400 mr-1 rounded-md hover:bg-yellow-500">
+                          <button
+                            className="w-full text-gray-900 bg-green-500 mr-1 rounded-md hover:bg-green-600"
+                            onClick={() => handleEditForm(medicine)}
+                          >
                             Edit
                           </button>
                           <button

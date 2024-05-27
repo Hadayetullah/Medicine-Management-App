@@ -30,8 +30,32 @@ const allMedicineSlice = createSlice({
     loading: false,
     getAllMedicines: [],
     error: "",
+    selectedMedicine: null,
+    editModal: false,
   },
-  reducers: {},
+  reducers: {
+    setSelectedMedicine: (state, action) => {
+      state.selectedMedicine = action.payload;
+    },
+    setEditModal: (state, action) => {
+      state.editModal = action.payload;
+    },
+    setUpdatedData: (state, action) => {
+      const index = state.getAllMedicines.findIndex(action.payload.id);
+      if (index !== -1) {
+        state.getAllMedicines[index] = action.payload;
+      }
+    },
+    setError: (state, action) => {
+      state.error = action.payload;
+    },
+    addNewData: (state, action) => {
+      state.getAllMedicines.push(action.payload);
+    },
+    displayFilteredMedicines: (state, action) => {
+      state.getAllMedicines = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(allMedicines.pending, (state) => {
@@ -53,4 +77,12 @@ const allMedicineSlice = createSlice({
   },
 });
 
+export const {
+  setSelectedMedicine,
+  setEditModal,
+  setUpdatedData,
+  setError,
+  addNewData,
+  displayFilteredMedicines,
+} = allMedicineSlice.actions;
 export default allMedicineSlice.reducer;

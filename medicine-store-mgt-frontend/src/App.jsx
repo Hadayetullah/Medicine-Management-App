@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { allMedicines } from "./components/dashboard/features/allMedicineSlice";
 
 import "./assets/index.css";
+import Edit from "./components/dashboard/forms/Edit";
 
 function App() {
   const dispatch = useDispatch();
@@ -19,12 +20,16 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navbar />
+      <div className="w-full p-0 m-0 relative">
+        <Navbar />
 
-      <div className="bg-white pt-4 px-2 sm:px-4">
-        <div className="container mx-auto pt-0 pb-3 md:pb-0 sm:pt-3 mt-[60px]">
-          <AppRoutes />
+        <div className="bg-white pt-4 px-2 sm:px-4">
+          <div className="container mx-auto pt-0 pb-3 md:pb-0 sm:pt-3 mt-[60px]">
+            <AppRoutes />
+          </div>
         </div>
+
+        <Edit />
       </div>
     </BrowserRouter>
   );

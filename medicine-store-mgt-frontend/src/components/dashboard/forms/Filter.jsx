@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import {
+  displayFilteredMedicines,
+  setError,
+} from "../features/allMedicineSlice";
 
 const FilterForm = () => {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     companyName: "",
     categoryName: "",
@@ -33,10 +39,10 @@ const FilterForm = () => {
       const response = await axios.get(
         `http://127.0.0.1:8000/api/medicine/medicines/?${queryParams.toString()}`
       );
-      console.log("Filtered data:", response.data);
-      // Process the filtered data as needed
+
+      dispatch(displayFilteredMedicines(response.data));
     } catch (error) {
-      console.error("Error fetching filtered data:", error);
+      dispatch(setError(error.response.data.non_field_errors[0]));
     }
   };
 

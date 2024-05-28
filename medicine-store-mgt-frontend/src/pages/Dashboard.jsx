@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCurrentMedicineListStatus } from "../components/dashboard/features/allMedicineSlice";
 import FilteredList from "../components/dashboard/FilteredList";
 import SearchedList from "../components/dashboard/SearchedList";
+import Search from "../components/dashboard/forms/Search";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -46,7 +47,9 @@ const Dashboard = () => {
       <hr />
       <hr />
 
-      <div className="min-w-[190px] max-w-[300px] flex flex-row items-center justify-center gap-3 mt-5 mb-2 mx-auto">
+      <Search />
+
+      <div className="min-w-[190px] max-w-[300px] flex flex-row items-center justify-center gap-3 mt-7 mb-2 mx-auto">
         <button
           onClick={() => handleActiveMedicineListStatus("all")}
           className={`hover:bg-blue-900 text-white w-full py-1 px-2 rounded-md ${

@@ -5,7 +5,7 @@ import {
   setSelectedMedicine,
 } from "./features/allMedicineSlice";
 
-const MedicineList = () => {
+const SearchedList = () => {
   const dispatch = useDispatch();
   const { loading, dispalyAllMedicines, error, editModal } = useSelector(
     (state) => state.allMedicines
@@ -191,4 +191,4 @@ const MedicineList = () => {
   );
 };
 
-export default MedicineList;
+export default SearchedList;

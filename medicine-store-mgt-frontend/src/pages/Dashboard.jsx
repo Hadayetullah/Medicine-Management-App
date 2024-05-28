@@ -1,8 +1,35 @@
 import Filter from "../components/dashboard/forms/Filter";
 import AddData from "../components/dashboard/forms/AddData";
 import MedicineList from "../components/dashboard/MedicineList";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentMedicineListStatus } from "../components/dashboard/features/allMedicineSlice";
+import FilteredList from "../components/dashboard/FilteredList";
+import SearchedList from "../components/dashboard/SearchedList";
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
+  const { currentMedicineListStatus } = useSelector(
+    (state) => state.allMedicines
+  );
+
+  // useEffect(() => {
+  //   console.log("first");
+  // }, []);
+
+  let displayList = null;
+  if (currentMedicineListStatus === "all") {
+    displayList = <MedicineList />;
+  } else if (currentMedicineListStatus === "filtered") {
+    displayList = <FilteredList />;
+  } else if (currentMedicineListStatus === "searched") {
+    displayList = <SearchedList />;
+  }
+
+  const handleActiveMedicineListStatus = (payload) => {
+    dispatch(setCurrentMedicineListStatus(payload));
+  };
+
   return (
     <div>
       <div className="w-full bg-white flex flex-col sm:flex-row gap-4 mb-4">
@@ -19,7 +46,38 @@ const Dashboard = () => {
       <hr />
       <hr />
 
-      <MedicineList />
+      <div className="min-w-[190px] max-w-[300px] flex flex-row items-center justify-center gap-3 mt-5 mb-2 mx-auto">
+        <button
+          onClick={() => handleActiveMedicineListStatus("all")}
+          className={`hover:bg-blue-900 text-white w-full py-1 px-2 rounded-md ${
+            currentMedicineListStatus === "all" ? "bg-blue-900" : "bg-blue-500"
+          }`}
+        >
+          All
+        </button>
+        <button
+          onClick={() => handleActiveMedicineListStatus("filtered")}
+          className={`hover:bg-blue-900 text-white w-full py-1 px-2 rounded-md ${
+            currentMedicineListStatus === "filtered"
+              ? "bg-blue-900"
+              : "bg-blue-500"
+          }`}
+        >
+          Filtered
+        </button>
+        <button
+          onClick={() => handleActiveMedicineListStatus("searched")}
+          className={`hover:bg-blue-900 text-white w-full py-1 px-2 rounded-md ${
+            currentMedicineListStatus === "searched"
+              ? "bg-blue-900"
+              : "bg-blue-500"
+          }`}
+        >
+          Searched
+        </button>
+      </div>
+
+      {displayList}
     </div>
   );
 };

@@ -4,6 +4,10 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
+
+  const handleTotalListData = () => {
+    console.log("first");
+  };
   return (
     <nav className="bg-blue-500 py-4 px-2 sm:px-4 fixed top-0 left-0 w-full">
       <div className="container mx-auto flex items-center flex-row justify-between">
@@ -46,7 +50,10 @@ const Navbar = () => {
 
             {toggleMenu && (
               <ul className="flex flex-col w-full absolute left-0 top-8 bg-white min-w-[140px] max-w-[170px] border border-gray-200 bg-gray-100 rounded rounded-xs shadow-lg sm:hidden">
-                <li className="transition bg-gray-100 p-2 hover:bg-blue-500 rounded hover:border hover:border-white hover:text-white w-full h-full">
+                <li
+                  className="transition bg-gray-100 p-2 hover:bg-blue-500 rounded hover:border hover:border-white hover:text-white w-full h-full"
+                  onClick={() => handleTotalListData()}
+                >
                   <Link to="/" className=" w-full h-full">
                     Dashboard
                   </Link>

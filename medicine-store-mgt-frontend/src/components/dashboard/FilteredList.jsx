@@ -5,9 +5,9 @@ import {
   setSelectedMedicine,
 } from "./features/allMedicineSlice";
 
-const MedicineList = () => {
+const FilteredList = () => {
   const dispatch = useDispatch();
-  const { loading, dispalyAllMedicines, error, editModal } = useSelector(
+  const { loading, filteredMedicines, error, editModal } = useSelector(
     (state) => state.allMedicines
   );
 
@@ -74,9 +74,9 @@ const MedicineList = () => {
             style={{ scrollbarWidth: "thin", zIndex: "-1" }}
           >
             <div className="w-full min-h-[60vh] max-h-[75vh] pb-5 bg-white">
-              {dispalyAllMedicines.length > 0 ? (
+              {filteredMedicines.length > 0 ? (
                 <div className="w-full h-full">
-                  {dispalyAllMedicines.map((medicine) => {
+                  {filteredMedicines.map((medicine) => {
                     const createdTime = new Date(medicine.created_at);
                     const createdTimeDay = createdTime.getDate();
                     const createdTimeMonth = createdTime.getMonth();
@@ -191,4 +191,4 @@ const MedicineList = () => {
   );
 };
 
-export default MedicineList;
+export default FilteredList;

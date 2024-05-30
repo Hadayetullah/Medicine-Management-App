@@ -1,13 +1,13 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
-import ProjectDetails from "../pages/ProjectDetails";
+import ProjectOverview from "../pages/ProjectOverview";
 
 const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} />
-      <Route path="/project-overview" element={<ProjectDetails />} />
+      <Route path="/project-overview" element={<ProjectOverview />} />
     </Routes>
   );
 };

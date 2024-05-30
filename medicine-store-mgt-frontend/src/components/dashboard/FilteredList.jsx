@@ -9,6 +9,7 @@ import {
   deleteListData,
   deleteFilteredData,
   deleteSearchedData,
+  setLoading,
 } from "./features/allMedicineSlice";
 import { useEffect } from "react";
 
@@ -24,15 +25,18 @@ const FilteredList = () => {
   );
 
   const handleDelete = async (id) => {
+    dispatch(setLoading(true));
     try {
       const response = await deleteMedicine(id);
       if (response.status === 204) {
         dispatch(deleteListData(id));
         dispatch(deleteFilteredData(id));
         dispatch(deleteSearchedData(id));
+        dispatch(setLoading(false));
         dispatch(setSuccessMsg("Medicine deleted successfully"));
       }
     } catch (error) {
+      dispatch(setLoading(false));
       dispatch(setError(`Failed to delete medicine: ${error.message}`));
     }
   };

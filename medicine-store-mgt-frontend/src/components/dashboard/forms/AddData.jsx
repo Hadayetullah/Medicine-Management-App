@@ -3,8 +3,8 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import {
   addNewData,
-  setCurrentMedicineListStatus,
   setError,
+  setLoading,
   setSuccessMsg,
 } from "../features/allMedicineSlice";
 
@@ -27,6 +27,7 @@ const AddData = () => {
   };
 
   const handleSubmit = async (e) => {
+    dispatch(setLoading(true));
     e.preventDefault();
     const data = {
       company_name: { name: formData.companyName },
@@ -42,6 +43,7 @@ const AddData = () => {
         data
       );
 
+      dispatch(setLoading(false));
       dispatch(setSuccessMsg("Data updated successfully!"));
       dispatch(addNewData(response.data));
       setFormData({
@@ -52,6 +54,7 @@ const AddData = () => {
         medicinePower: "",
       });
     } catch (error) {
+      dispatch(setLoading(false));
       if (error.response) {
         const errorMsg = error.response.data.non_field_errors
           ? error.response.data.non_field_errors[0]

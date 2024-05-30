@@ -9,6 +9,7 @@ import {
   setUpdatedFilteredData,
   setUpdatedSearchedData,
   compareAndUpdateSearchedData,
+  setLoading,
 } from "../features/allMedicineSlice";
 import axios from "axios";
 
@@ -51,6 +52,7 @@ const Edit = () => {
   };
 
   const handleSubmit = async (e) => {
+    dispatch(setLoading(true));
     e.preventDefault();
 
     const data = {
@@ -69,6 +71,7 @@ const Edit = () => {
       );
 
       const responseData = await response.data;
+      dispatch(setLoading(false));
       dispatch(setSuccessMsg("Data updated successfully!"));
 
       if (currentMedicineListStatus === "all") {
@@ -86,6 +89,7 @@ const Edit = () => {
 
       dispatch(setEditModal(!editModal));
     } catch (error) {
+      dispatch(setLoading(false));
       if (error.response) {
         const errorMsg = error.response.data.non_field_errors
           ? error.response.data.non_field_errors[0]

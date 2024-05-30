@@ -150,6 +150,9 @@ const allMedicineSlice = createSlice({
         (item) => item.id !== action.payload
       );
     },
+    setLoading: (state, action) => {
+      state.loading = action.payload;
+    },
   },
 
   extraReducers: (builder) => {
@@ -188,5 +191,6 @@ export const {
   deleteListData,
   deleteFilteredData,
   deleteSearchedData,
+  setLoading,
 } = allMedicineSlice.actions;
 export default allMedicineSlice.reducer;

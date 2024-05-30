@@ -12,6 +12,7 @@ import "./assets/index.css";
 import Edit from "./components/dashboard/forms/Edit";
 import ErrorMsg from "./components/common/ErrorMsg";
 import SuccessMsg from "./components/common/SuccessMsg";
+import Loader from "./components/common/Loader";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ function App() {
         <Edit />
         <ErrorMsg />
         <SuccessMsg />
+        <Loader />
       </div>
     </BrowserRouter>
   );

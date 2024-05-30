@@ -5,6 +5,7 @@ import {
   displayFilteredMedicines,
   setCurrentMedicineListStatus,
   setError,
+  setLoading,
   setSuccessMsg,
 } from "../features/allMedicineSlice";
 
@@ -26,6 +27,7 @@ const FilterForm = () => {
   };
 
   const handleSubmit = async (e) => {
+    dispatch(setLoading(true));
     e.preventDefault();
 
     const queryParams = new URLSearchParams();
@@ -42,10 +44,12 @@ const FilterForm = () => {
         `http://127.0.0.1:8000/api/medicine/medicines/?${queryParams.toString()}`
       );
 
+      dispatch(setLoading(false));
       dispatch(setSuccessMsg("Data fetched successfully!"));
       dispatch(displayFilteredMedicines(response.data));
       dispatch(setCurrentMedicineListStatus("filtered"));
     } catch (error) {
+      dispatch(setLoading(false));
       if (error.response) {
         const errorMsg = error.response.data.non_field_errors
           ? error.response.data.non_field_errors[0]

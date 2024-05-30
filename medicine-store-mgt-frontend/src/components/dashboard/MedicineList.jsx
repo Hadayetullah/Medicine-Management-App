@@ -1,8 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deleteFilteredData,
+  deleteListData,
   deleteMedicine,
+  deleteSearchedData,
   setEditModal,
+  setError,
   setSelectedMedicine,
+  setSuccessMsg,
 } from "./features/allMedicineSlice";
 
 const MedicineList = () => {
@@ -11,8 +16,18 @@ const MedicineList = () => {
     (state) => state.allMedicines
   );
 
-  const handleDelete = (id) => {
-    dispatch(deleteMedicine(id));
+  const handleDelete = async (id) => {
+    try {
+      const response = await deleteMedicine(id);
+      if (response.status === 204) {
+        dispatch(deleteListData(id));
+        dispatch(deleteFilteredData(id));
+        dispatch(deleteSearchedData(id));
+        dispatch(setSuccessMsg("Medicine deleted successfully"));
+      }
+    } catch (error) {
+      dispatch(setError(`Failed to delete medicine: ${error.message}`));
+    }
   };
 
   const handleEditForm = (medicine) => {
@@ -22,10 +37,6 @@ const MedicineList = () => {
 
   if (loading) {
     return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
   }
 
   return (
@@ -76,7 +87,7 @@ const MedicineList = () => {
             <div className="w-full min-h-[60vh] max-h-[75vh] pb-5 bg-white">
               {dispalyAllMedicines.length > 0 ? (
                 <div className="w-full h-full">
-                  {dispalyAllMedicines.map((medicine) => {
+                  {dispalyAllMedicines.map((medicine, index) => {
                     const createdTime = new Date(medicine.created_at);
                     const createdTimeDay = createdTime.getDate();
                     const createdTimeMonth = createdTime.getMonth();
@@ -125,7 +136,7 @@ const MedicineList = () => {
                       <div
                         key={medicine.id}
                         className={`w-full h-full flex flex-row text-gray-500 ${
-                          medicine.id % 2 === 0 ? "bg-gray-100" : "bg-white"
+                          index % 2 === 1 ? "bg-gray-100" : "bg-white"
                         }`}
                       >
                         <div className="w-[12%] h-full flex my-1 items-center pl-2">

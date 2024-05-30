@@ -1,18 +1,40 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deleteFilteredData,
+  deleteListData,
   deleteMedicine,
+  deleteSearchedData,
+  setCurrentMedicineListStatus,
   setEditModal,
+  setError,
   setSelectedMedicine,
+  setSuccessMsg,
 } from "./features/allMedicineSlice";
+import { useEffect } from "react";
 
 const SearchedList = () => {
   const dispatch = useDispatch();
-  const { loading, dispalyAllMedicines, error, editModal } = useSelector(
+
+  useEffect(() => {
+    dispatch(setCurrentMedicineListStatus("searched"));
+  }, []);
+
+  const { loading, searchedMedicines, error, editModal } = useSelector(
     (state) => state.allMedicines
   );
 
-  const handleDelete = (id) => {
-    dispatch(deleteMedicine(id));
+  const handleDelete = async (id) => {
+    try {
+      const response = await deleteMedicine(id);
+      if (response.status === 204) {
+        dispatch(deleteListData(id));
+        dispatch(deleteFilteredData(id));
+        dispatch(deleteSearchedData(id));
+        dispatch(setSuccessMsg("Medicine deleted successfully"));
+      }
+    } catch (error) {
+      dispatch(setError(`Failed to delete medicine: ${error.message}`));
+    }
   };
 
   const handleEditForm = (medicine) => {
@@ -22,10 +44,6 @@ const SearchedList = () => {
 
   if (loading) {
     return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
   }
 
   return (
@@ -74,9 +92,9 @@ const SearchedList = () => {
             style={{ scrollbarWidth: "thin", zIndex: "-1" }}
           >
             <div className="w-full min-h-[60vh] max-h-[75vh] pb-5 bg-white">
-              {dispalyAllMedicines.length > 0 ? (
+              {searchedMedicines.length > 0 ? (
                 <div className="w-full h-full">
-                  {dispalyAllMedicines.map((medicine) => {
+                  {searchedMedicines.map((medicine) => {
                     const createdTime = new Date(medicine.created_at);
                     const createdTimeDay = createdTime.getDate();
                     const createdTimeMonth = createdTime.getMonth();

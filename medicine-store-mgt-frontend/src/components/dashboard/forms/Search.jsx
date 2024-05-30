@@ -1,11 +1,37 @@
-import React, { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  compareAndUpdateSearchedData,
+  setCurrentMedicineListStatus,
+  setSearchedMedicines,
+} from "../features/allMedicineSlice";
+import { useState } from "react";
 
 const Search = () => {
+  const dispatch = useDispatch();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const { dispalyAllMedicines } = useSelector((state) => state.allMedicines);
+
   const handleIconClick = () => {
     const input = document.getElementById("search-input");
     if (input) {
       input.focus();
+      dispatch(compareAndUpdateSearchedData());
     }
+  };
+
+  const handleFocus = () => {
+    dispatch(compareAndUpdateSearchedData());
+  };
+
+  const filteredMedicines = dispalyAllMedicines.filter((medicine) =>
+    medicine.medicine_name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const handleSearchChange = (e) => {
+    dispatch(setSearchedMedicines(filteredMedicines));
+    setSearchQuery(e.target.value);
+    dispatch(setCurrentMedicineListStatus("searched"));
   };
 
   return (
@@ -13,8 +39,11 @@ const Search = () => {
       <input
         type="text"
         placeholder="Search by Medicine Name"
-        className="w-full max-w-lg p-2 border border-gray-300 rounded-md absolute h-full"
+        value={searchQuery}
+        className="w-full max-w-lg p-2 border border-gray-300 rounded-md absolute h-full z-10"
         id="search-input"
+        onChange={(e) => handleSearchChange(e)}
+        onFocus={handleFocus}
       />
 
       <div

@@ -3,16 +3,38 @@ import {
   deleteMedicine,
   setEditModal,
   setSelectedMedicine,
+  setCurrentMedicineListStatus,
+  setError,
+  setSuccessMsg,
+  deleteListData,
+  deleteFilteredData,
+  deleteSearchedData,
 } from "./features/allMedicineSlice";
+import { useEffect } from "react";
 
 const FilteredList = () => {
   const dispatch = useDispatch();
-  const { loading, filteredMedicines, error, editModal } = useSelector(
+
+  useEffect(() => {
+    dispatch(setCurrentMedicineListStatus("filtered"));
+  }, []);
+
+  const { loading, filteredMedicines, editModal } = useSelector(
     (state) => state.allMedicines
   );
 
-  const handleDelete = (id) => {
-    dispatch(deleteMedicine(id));
+  const handleDelete = async (id) => {
+    try {
+      const response = await deleteMedicine(id);
+      if (response.status === 204) {
+        dispatch(deleteListData(id));
+        dispatch(deleteFilteredData(id));
+        dispatch(deleteSearchedData(id));
+        dispatch(setSuccessMsg("Medicine deleted successfully"));
+      }
+    } catch (error) {
+      dispatch(setError(`Failed to delete medicine: ${error.message}`));
+    }
   };
 
   const handleEditForm = (medicine) => {
@@ -22,10 +44,6 @@ const FilteredList = () => {
 
   if (loading) {
     return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
   }
 
   return (

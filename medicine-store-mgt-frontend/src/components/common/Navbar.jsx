@@ -1,21 +1,18 @@
 // src/components/common/Navbar.js
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
 
-  const handleTotalListData = () => {
-    console.log("first");
-  };
   return (
-    <nav className="bg-blue-500 py-4 px-2 sm:px-4 fixed top-0 left-0 w-full">
+    <nav className="bg-blue-500 py-4 px-2 sm:px-4 fixed top-0 left-0 w-full z-50">
       <div className="container mx-auto flex items-center flex-row justify-between">
         <div className="flex items-center justify-evenly w-full flex-row-reverse sm:flex-row sm:justify-between">
           <div className="w-full flex items-left sm:items-center pl-[6%] sm:pl-0">
-            <Link to={"/"} className="text-white">
+            <NavLink to={"/"} className="text-white">
               LOGO
-            </Link>
+            </NavLink>
           </div>
 
           <div className="flex w-full relative">
@@ -34,35 +31,56 @@ const Navbar = () => {
               />
             </svg>
 
-            <ul className="hidden flex-row w-full space-x-4 justify-start sm:justify-end sm:flex">
-              <li>
-                <Link to="/" className="text-white">
+            <ul className="hidden flex-row w-full space-x-6 justify-start sm:justify-end sm:flex">
+              <li className="">
+                <NavLink
+                  to="/"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-white border-b-2 border-white"
+                      : "text-white"
+                  }
+                >
                   Dashboard
-                </Link>
+                </NavLink>
               </li>
 
-              <li>
-                <Link to="/project-details" className="text-white">
-                  Project Details
-                </Link>
+              <li className="">
+                <NavLink
+                  to="/project-overview"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-white border-b-2 border-white"
+                      : "text-white"
+                  }
+                >
+                  Project Overview
+                </NavLink>
               </li>
             </ul>
 
             {toggleMenu && (
               <ul className="flex flex-col w-full absolute left-0 top-8 bg-white min-w-[140px] max-w-[170px] border border-gray-200 bg-gray-100 rounded rounded-xs shadow-lg sm:hidden">
-                <li
-                  className="transition bg-gray-100 p-2 hover:bg-blue-500 rounded hover:border hover:border-white hover:text-white w-full h-full"
-                  onClick={() => handleTotalListData()}
-                >
-                  <Link to="/" className=" w-full h-full">
+                <li className="transition bg-gray-100 p-2 hover:bg-blue-500 rounded hover:border hover:border-white hover:text-white w-full h-full">
+                  <NavLink
+                    to="/"
+                    className={({ isActive }) =>
+                      isActive ? "border-b-2 border-gray-400" : ""
+                    }
+                  >
                     Dashboard
-                  </Link>
+                  </NavLink>
                 </li>
 
                 <li className="transition bg-gray-100 p-2 hover:bg-blue-500 rounded hover:border hover:border-white hover:text-white w-full h-full">
-                  <Link to="/project-details" className="w-full h-full">
-                    Project Details
-                  </Link>
+                  <NavLink
+                    to="/project-overview"
+                    className={({ isActive }) =>
+                      isActive ? "border-b-2 border-gray-400" : ""
+                    }
+                  >
+                    Project Overview
+                  </NavLink>
                 </li>
               </ul>
             )}

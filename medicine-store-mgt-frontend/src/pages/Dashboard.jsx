@@ -1,24 +1,24 @@
 import Filter from "../components/dashboard/forms/Filter";
 import AddData from "../components/dashboard/forms/AddData";
 import MedicineList from "../components/dashboard/MedicineList";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentMedicineListStatus } from "../components/dashboard/features/allMedicineSlice";
+import {
+  compareAndUpdateFilteredData,
+  compareAndUpdateListData,
+  compareAndUpdateSearchedData,
+  setCurrentMedicineListStatus,
+} from "../components/dashboard/features/allMedicineSlice";
 import FilteredList from "../components/dashboard/FilteredList";
 import SearchedList from "../components/dashboard/SearchedList";
 import Search from "../components/dashboard/forms/Search";
 
 const Dashboard = () => {
+  let displayList = null;
   const dispatch = useDispatch();
   const { currentMedicineListStatus } = useSelector(
     (state) => state.allMedicines
   );
 
-  // useEffect(() => {
-  //   console.log("first");
-  // }, []);
-
-  let displayList = null;
   if (currentMedicineListStatus === "all") {
     displayList = <MedicineList />;
   } else if (currentMedicineListStatus === "filtered") {
@@ -28,6 +28,14 @@ const Dashboard = () => {
   }
 
   const handleActiveMedicineListStatus = (payload) => {
+    if (payload === "all") {
+      dispatch(compareAndUpdateListData());
+    } else if (payload === "filtered") {
+      dispatch(compareAndUpdateFilteredData());
+    } else if (payload === "searched") {
+      dispatch(compareAndUpdateSearchedData());
+    }
+
     dispatch(setCurrentMedicineListStatus(payload));
   };
 

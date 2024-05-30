@@ -4,15 +4,19 @@ import {
   setEditModal,
   setError,
   setUpdatedData,
+  setSuccessMsg,
+  setUpdatedListedData,
+  setUpdatedFilteredData,
+  setUpdatedSearchedData,
+  compareAndUpdateSearchedData,
 } from "../features/allMedicineSlice";
 import axios from "axios";
 
 const Edit = () => {
   const dispatch = useDispatch();
 
-  const { selectedMedicine, editModal } = useSelector(
-    (state) => state.allMedicines
-  );
+  const { selectedMedicine, editModal, currentMedicineListStatus } =
+    useSelector((state) => state.allMedicines);
 
   const [formData, setFormData] = useState({
     companyName: "",
@@ -65,9 +69,35 @@ const Edit = () => {
       );
 
       const responseData = await response.data;
-      dispatch(setUpdatedData(responseData.id, responseData));
+      dispatch(setSuccessMsg("Data updated successfully!"));
+
+      if (currentMedicineListStatus === "all") {
+        dispatch(setUpdatedData(responseData));
+        dispatch(setUpdatedListedData(responseData));
+        dispatch(compareAndUpdateSearchedData());
+      } else if (currentMedicineListStatus === "filtered") {
+        dispatch(setUpdatedData(responseData));
+        dispatch(setUpdatedFilteredData(responseData));
+        dispatch(compareAndUpdateSearchedData());
+      } else if (currentMedicineListStatus === "searched") {
+        dispatch(setUpdatedData(responseData));
+        dispatch(setUpdatedSearchedData(responseData));
+      }
+
+      dispatch(setEditModal(!editModal));
     } catch (error) {
-      dispatch(setError(error.response.data.non_field_errors[0]));
+      if (error.response) {
+        const errorMsg = error.response.data.non_field_errors
+          ? error.response.data.non_field_errors[0]
+          : "Something went wrong";
+        dispatch(setError(errorMsg));
+      } else if (error.request) {
+        dispatch(
+          setError("No response from the server. Please try again later.")
+        );
+      } else {
+        dispatch(setError("Error: " + error.message));
+      }
     }
   };
 

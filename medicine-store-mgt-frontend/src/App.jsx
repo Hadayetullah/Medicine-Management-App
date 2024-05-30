@@ -10,6 +10,8 @@ import { allMedicines } from "./components/dashboard/features/allMedicineSlice";
 
 import "./assets/index.css";
 import Edit from "./components/dashboard/forms/Edit";
+import ErrorMsg from "./components/common/ErrorMsg";
+import SuccessMsg from "./components/common/SuccessMsg";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +32,8 @@ function App() {
         </div>
 
         <Edit />
+        <ErrorMsg />
+        <SuccessMsg />
       </div>
     </BrowserRouter>
   );

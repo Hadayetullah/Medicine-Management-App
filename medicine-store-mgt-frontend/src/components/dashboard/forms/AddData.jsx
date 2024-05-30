@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { addNewData, setError } from "../features/allMedicineSlice";
+import {
+  addNewData,
+  setCurrentMedicineListStatus,
+  setError,
+  setSuccessMsg,
+} from "../features/allMedicineSlice";
 
 const AddData = () => {
   const dispatch = useDispatch();
@@ -37,6 +42,7 @@ const AddData = () => {
         data
       );
 
+      dispatch(setSuccessMsg("Data updated successfully!"));
       dispatch(addNewData(response.data));
       setFormData({
         companyName: "",
@@ -46,7 +52,18 @@ const AddData = () => {
         medicinePower: "",
       });
     } catch (error) {
-      dispatch(setError(error.response.data.non_field_errors[0]));
+      if (error.response) {
+        const errorMsg = error.response.data.non_field_errors
+          ? error.response.data.non_field_errors[0]
+          : "Something went wrong";
+        dispatch(setError(errorMsg));
+      } else if (error.request) {
+        dispatch(
+          setError("No response from the server. Please try again later.")
+        );
+      } else {
+        dispatch(setError("Error: " + error.message));
+      }
     }
   };
 

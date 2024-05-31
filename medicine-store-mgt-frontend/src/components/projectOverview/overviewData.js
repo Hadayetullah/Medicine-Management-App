@@ -3,13 +3,7 @@ export const overviewData = [
     title: "Objective",
     description:
       "The goal of this project was to build a Medicine Management Application with functionalities to list, search, filter, add, edit, and delete medicines using React and Redux Toolkit on the front end, and Django Rest Framework (DRF) on the back end. The application fetches data from the backend, manages global state with Redux, and updates the UI dynamically based on user interactions.",
-    mainListItem: [
-      {
-        leadingListTitle: "",
-        leadingListDescription: "",
-        leadinglistItem: [{ itemTitle: "", itemDescription: "" }],
-      },
-    ],
+    mainListItem: [],
   },
 
   {

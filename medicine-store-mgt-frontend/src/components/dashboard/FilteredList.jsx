@@ -46,10 +46,6 @@ const FilteredList = () => {
     dispatch(setEditModal(!editModal));
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="w-full mb-5">
       <div

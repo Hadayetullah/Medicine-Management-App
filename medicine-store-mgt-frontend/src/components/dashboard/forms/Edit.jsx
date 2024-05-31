@@ -66,7 +66,7 @@ const Edit = () => {
 
     try {
       const response = await axios.put(
-        `http://127.0.0.1:8000/api/medicine/medicines/${data.id}/`,
+        `https://hadayetullah003.pythonanywhere.com/api/medicine/medicines/${data.id}/`,
         data
       );
 

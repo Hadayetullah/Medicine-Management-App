@@ -13,7 +13,7 @@ import {
 
 const MedicineList = () => {
   const dispatch = useDispatch();
-  const { loading, dispalyAllMedicines, error, editModal } = useSelector(
+  const { loading, dispalyAllMedicines, editModal } = useSelector(
     (state) => state.allMedicines
   );
 
@@ -39,9 +39,9 @@ const MedicineList = () => {
     dispatch(setEditModal(!editModal));
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <div className="w-full mb-5">

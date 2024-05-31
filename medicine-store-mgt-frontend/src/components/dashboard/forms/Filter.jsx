@@ -41,7 +41,7 @@ const FilterForm = () => {
 
     try {
       const response = await axios.get(
-        `http://127.0.0.1:8000/api/medicine/medicines/?${queryParams.toString()}`
+        `https://hadayetullah003.pythonanywhere.com/api/medicine/medicines/?${queryParams.toString()}`
       );
 
       dispatch(setLoading(false));

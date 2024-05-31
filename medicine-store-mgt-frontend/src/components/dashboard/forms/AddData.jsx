@@ -39,7 +39,7 @@ const AddData = () => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/medicine/medicines/",
+        "https://hadayetullah003.pythonanywhere.com/api/medicine/medicines/",
         data
       );
 

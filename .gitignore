@@ -163,4 +163,9 @@ dmypy.json
 cython_debug/
 
 
+static
+/static
+static/
+/static/
+
 # End of https://www.toptal.com/developers/gitignore/api/django

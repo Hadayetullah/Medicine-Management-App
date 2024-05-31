@@ -6,7 +6,7 @@ export const allMedicines = createAsyncThunk(
   "medicines/allMedicines",
   async () => {
     const response = await axios.get(
-      "http://127.0.0.1:8000/api/medicine/medicines/"
+      "https://hadayetullah003.pythonanywhere.com/api/medicine/medicines/"
     );
     const data = response.data;
     return data;
@@ -17,7 +17,7 @@ export const allMedicines = createAsyncThunk(
 export const deleteMedicine = async (id) => {
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/api/medicine/medicines/${id}/`,
+      `https://hadayetullah003.pythonanywhere.com/api/medicine/medicines/${id}/`,
       {
         method: "DELETE",
       }

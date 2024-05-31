@@ -14,12 +14,6 @@ git clone https://github.com/Hadayetullah/Medicine-Store-Management-App.git
 git checkout main
 ```
 
-### Install packages:
-
-```bash
-pip install -r requirements.txt
-```
-
 ### Create and activate virtual environment where medicine_store_mgt_api and medicine-store-mgt-frontend exits (Window):
 
 ```bash
@@ -28,6 +22,12 @@ py -m venv <Name of the virtual environment>
 
 ```bash
 <Name of the virtual environment>\Scripts\activate
+```
+
+### Install packages:
+
+```bash
+pip install -r requirements.txt
 ```
 
 ### Go to the Repository:
